@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->timestamps('published_at')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->string('title');
             $table->text('content');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
