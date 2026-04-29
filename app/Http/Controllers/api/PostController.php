@@ -16,7 +16,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->paginate(10) ->latest();
+        $posts = Post::with('user')->latest() ->paginate(10);
         return PostResource::collection($posts);
     }
     public function show(Post $post)
@@ -27,11 +27,15 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
-        $data = $request ->validate;
+        $data = $request ->validate([
+            'content' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'published_at' => 'nullable|date',
+        ]);
         $post = Post::create([
-            'title' => $data['title'],
-            'content' => $data['content'],
             'user_id' => Auth::user()->id,
+            'content' => $data['content'],
+            'title' => $data['title'],
             'slug' => Str::slug($data['title']),
             'published_at' => $data['published_at'] ?? now(),
         ]);
@@ -40,7 +44,11 @@ class PostController extends Controller
     }
     public function update(Request $request, Post $post)
     {
-        $data = $request ->validate;
+        $data = $request ->validate([
+            'content' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'published_at' => 'nullable|date',
+        ]);
         $post->update($data);
         return new PostResource($post->load('user'));
     }
