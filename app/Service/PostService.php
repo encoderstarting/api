@@ -29,17 +29,11 @@ class PostService
     }
         public function updatePost(Post $post, array $data): Post
     {
-        if ($post->user_id !== Auth::user()->id) {
-            throw new \Exception('You are not authorized to update this post');
-        }
         $data['slug'] = Str::slug($data['title']);
         return $this->postRepository->update($post, $data);
     }
         public function deletePost(Post $post): bool
     {
-        if ($post->user_id !== Auth::user()->id) {
-            throw new \Exception('You are not authorized to delete this post');
-        }
         return $this->postRepository->delete($post);
     }
 

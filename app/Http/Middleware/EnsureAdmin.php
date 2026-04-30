@@ -16,10 +16,6 @@ class EnsureAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!$request->user())
-        {
-            return response()->json(['message' => 'Unauthorized user'], 401);
-        }
         if($request->user()->role !== 'admin')
         {
             return response()->json(['message' => 'Forbidden user'], 403);

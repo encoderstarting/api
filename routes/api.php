@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum',EnsureAdmin::class])->prefix('admin')->group(f
     Route::put('/posts/{post}', [AdminPostController::class, 'update']);
     Route::delete('/posts/{post}', [AdminPostController::class, 'destroy']);
 });
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum',EnsureAdmin::class])->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
