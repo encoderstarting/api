@@ -28,21 +28,4 @@ class PostController extends Controller
     {
         return new PostResource($post->load('user'));
     }
-    public function store(StorePostRequest $request)
-    {
-        $data = $request->validated();
-        $post = $this->postService->createPost($data);
-        return new PostResource($post);
-    }
-    public function update(UpdatePostRequest $request, Post $post)
-    {
-        $data = $request->validated();
-        $post = $this->postService->updatePost($post, $data);
-        return new PostResource($post);
-    }
-    public function destroy(Post $post)
-    {
-        $this->postService->deletePost($post);
-        return response()->json(['message' => 'пост удален']);
-    }
 }

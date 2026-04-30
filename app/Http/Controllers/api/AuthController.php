@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\LoginRequest;
 
 
 
@@ -14,10 +15,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $data = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:8',
-        ]);
+        $data = $request->validated();
         if (!Auth::attempt($data)) {
             throw ValidationException::withMessages([
                 'email' => ['Неверный email или пароль.'],
