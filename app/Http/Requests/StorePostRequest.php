@@ -26,8 +26,6 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'slug' => 'required|string|max:255|unique:posts',
-            'user_id' => 'required|exists:users,id',
             'published_at' => 'nullable|date',
         ];
     }

@@ -9,52 +9,40 @@ use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
-
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use App\Service\PostService;
 
 class PostController extends Controller
 {
+    public function __construct(private PostService $postService)
+    {
+        $this->postService = $postService;
+    }
     public function index()
     {
-        $posts = Post::with('user')->latest() ->paginate(10);
+        $posts = $this->postService->getPaginatedPosts();
         return PostResource::collection($posts);
     }
     public function show(Post $post)
     {
-        $post->load('user');
-
+        return new PostResource($post->load('user'));
+    }
+    public function store(StorePostRequest $request)
+    {
+        $data = $request->validated();
+        $post = $this->postService->createPost($data);
         return new PostResource($post);
     }
-    public function store(Request $request)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = $request ->validate([
-            'content' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'published_at' => 'nullable|date',
-        ]);
-        $post = Post::create([
-            'user_id' => Auth::user()->id,
-            'content' => $data['content'],
-            'title' => $data['title'],
-            'slug' => Str::slug($data['title']),
-            'published_at' => $data['published_at'] ?? now(),
-        ]);
-        return new PostResource($post->load('user'));
-      
-    }
-    public function update(Request $request, Post $post)
-    {
-        $data = $request ->validate([
-            'content' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'published_at' => 'nullable|date',
-        ]);
-        $post->update($data);
-        return new PostResource($post->load('user'));
+        $data = $request->validated();
+        $post = $this->postService->updatePost($post, $data);
+        return new PostResource($post);
     }
     public function destroy(Post $post)
     {
-        $post->delete();
+        $this->postService->deletePost($post);
         return response()->json(['message' => 'пост удален']);
     }
 }
