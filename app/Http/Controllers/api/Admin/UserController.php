@@ -8,14 +8,19 @@ use App\Models\User;
 use App\Http\Requests\UpdateUserRequest;
 use App\Service\UserService;
 use App\Http\Resources\UserResource;
+use App\Enums\Role;
 
 
 class UserController extends Controller
 {
-    public function updateRole(Request $request, User $user)
+    public function __construct(private UserService $userService)
     {
-       $data = $request->validated(['role' => 'required|in:admin,user']);
-        $user->update(['role' => $data['role']]);
+        $this->userService = $userService;
+    }
+    public function updateRole(Request $request, User $user)
+    {   
+       $data = $request->validate(['role' => 'required|in:admin,user']);
+        $this->userService->assignRole($user, $data['role']);
         return response()->json(['message' => 'Роль пользователя обновлена']);
     }
 }

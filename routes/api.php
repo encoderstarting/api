@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
 
 
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 });

@@ -7,8 +7,6 @@ use App\Models\Post;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User as UserModel;
-use App\Models\Role as RoleModel;
 
 class PostService
 {
@@ -37,14 +35,6 @@ class PostService
         public function deletePost(Post $post): bool
     {
         return $this->postRepository->delete($post);
-    }
-    public function assignRole(UserModel $user, RoleModel $role): void
-    {
-        $role = RoleModel::where('name', $role)->first();
-        if (!$role) {
-            throw new \Exception('Role not found');
-        }
-        $user->roles()->attach($role->id);
     }
 
 }
