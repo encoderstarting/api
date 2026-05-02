@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\LoginRequest;
 use App\Services\AuthServices;
+use App\Http\Requests\RefreshTokenRequest;
+use App\Models\RefreshToken;
 
 
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login( LoginRequest $request)
     {
         $data = $request->validated();
         if (!Auth::attempt($data)) {
@@ -39,13 +41,34 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        $request->user()->refreshTokens()->delete();
         return response()->json([
             'message' => 'Вы успешно вышли из системы',
         ]);
     }
+    public function refresh(RefreshTokenRequest $request)
+    {
+        $data = $request->validated();
+        $refreshToken = RefreshToken::where('token', $data['refresh_token'])->first();
+        if (!$refreshToken) {
+            return response()->json([
+                'message' => 'Refresh token is invalid',
+            ], 401);
+        }
+        if ($refreshToken->expires_at < now())
+         {
+            $refreshToken->delete();
+            return response()->json([
+                'message' => 'Refresh token is expired',
+            ], 401);
+        }
+        $user = $refreshToken->user;
+        $refreshToken->delete();
+        return response()->json([
+            'user' => $user,
+            'token' => (new AuthServices())->generateTokens($user),
+        ]);
+    }
      
   
-
-    
 }
