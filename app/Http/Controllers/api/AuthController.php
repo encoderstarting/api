@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\LoginRequest;
+use App\Services\AuthServices;
 
 
 
@@ -25,7 +26,7 @@ class AuthController extends Controller
         $user = $request->user();
         return response()->json([
             'user' => $user,
-            'token' => $user->createToken('auth_token')->plainTextToken,
+            'token' => (new AuthServices())->generateTokens($user),
         ]);
 
       
