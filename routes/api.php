@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Middleware\EnsureAdmin;
 use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
-
+use App\Http\Controllers\Api\ProductController;
 
 
 
@@ -31,3 +31,5 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 Route::post('/refresh', [AuthController::class, 'refresh']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
