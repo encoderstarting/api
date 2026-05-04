@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Middleware\EnsureAdmin;
 use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 
 
 
@@ -21,6 +22,9 @@ Route::middleware(['auth:api','role:admin'])->group(function () {
     Route::post('/posts', [AdminPostController::class, 'store']);
     Route::put('/posts/{post}', [AdminPostController::class, 'update']);
     Route::delete('/posts/{post}', [AdminPostController::class, 'destroy']);
+    Route::post('/products', [AdminProductController::class, 'store']);
+    Route::put('/products/{product}', [AdminProductController::class, 'update']);
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy']);
 });
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
