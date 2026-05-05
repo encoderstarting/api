@@ -9,6 +9,7 @@ use App\Http\Middleware\EnsureAdmin;
 use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\OrderController;
 
 
 
@@ -29,7 +30,9 @@ Route::middleware(['auth:api','role:admin'])->group(function () {
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/orders', [OrderController::class, 'store']);
 });
+
 Route::post('/refresh', [AuthController::class, 'refresh']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);

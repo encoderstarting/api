@@ -9,13 +9,7 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'product_id' => 'required|exists:products,id',
-        ];
-    }
-    public function messages(): array
-    {
-        return [
-            'product_id.required' => 'id товара обязательно',
-            'product_id.exists' => 'id товара не найден',
+            'quantity' => 'required|integer|min:1',
         ];
     }
 }
