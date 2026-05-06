@@ -1,25 +1,13 @@
-import { API_BASE_URL } from "./config";
+import { apiRequest } from "./apiClient";
+
 export function getProducts() {
-    return fetch(`${API_BASE_URL}/products`).then((response) => {
-      if (!response.ok) {
-        throw new Error("Не удалось получить товары");
-      }
-  
-      return response.json();
-    }).then((data) => {
-      return data.data;
-    });
-  }
-  export function getProduct(id) {
-    return fetch(`${API_BASE_URL}/products/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Не удалось получить товар");
-        }
-  
-        return response.json();
-      })
-      .then((data) => {
-        return data.data;
-      });
-  }
+  return apiRequest("/products").then((data) => {
+    return data.data;
+  });
+}
+
+export function getProduct(id) {
+  return apiRequest(`/products/${id}`).then((data) => {
+    return data.data;
+  });
+}

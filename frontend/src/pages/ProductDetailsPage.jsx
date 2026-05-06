@@ -2,10 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProduct } from "../api/productsApi";
 import StatusMessage from "../components/StatusMessage.jsx";
+import { createOrder } from "../api/ordersApi";
 
 function ProductDetailsPage() {
   const { id } = useParams();
-
+  const[message, setMessage] = useState("");
+  function handleCreateOrder() {
+    setMessage("");
+    setError("");
+  
+    createOrder(product.id, 1)
+      .then(() => {
+        setMessage("Заказ создан");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  }
   const [product, setProduct] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +55,8 @@ function ProductDetailsPage() {
             <p>Цена: {product.price} руб.</p>
             <p>Бренд: {product.brand}</p>
             <p>Количество: {product.quantity}</p>
+            <button onClick={handleCreateOrder}>Купить</button>
+            {message && <StatusMessage>{message}</StatusMessage>}
           </div>
         )}
       </div>

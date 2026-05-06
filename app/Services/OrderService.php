@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Services;
 use App\Models\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Repository\OrderRepository;
@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Models\Product;
+
 
 class OrderService
 {

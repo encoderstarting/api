@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
-use App\Service\ProductService;
+use App\Services\ProductService;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
