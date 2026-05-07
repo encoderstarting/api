@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/postsApi";
-import { isAdmin, isAuthenticated } from "../api/authStorage";
 import StatusMessage from "../components/StatusMessage.jsx";
 
 function CreateReviewsPage() {
@@ -15,15 +14,6 @@ function CreateReviewsPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!isAuthenticated()) {
-    navigate("/login");
-    return null;
-  }
-
-  if (!isAdmin()) {
-    navigate("/reviews");
-    return null;
-  }
 
   function handleChange(event) {
     const { name, value } = event.target;

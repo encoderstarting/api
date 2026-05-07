@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { isAdmin, isAuthenticated } from "../api/authStorage";
 import StatusMessage from "../components/StatusMessage.jsx";
 import { deletePost } from "../api/postsApi";
 function DeleteReviewsPage() {
@@ -10,16 +9,6 @@ function DeleteReviewsPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const admin = isAdmin();
-  const authenticated = isAuthenticated();
-  if (!authenticated || !admin) {
-    navigate("/login");
-    return null;
-  }
-  if (!admin) {
-    navigate("/reviews");
-    return null;
-  }
   function handleDeleteReview() {
     setIsDeleting(true);
     deletePost(id)

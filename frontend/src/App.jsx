@@ -12,6 +12,8 @@ import ReviewsPage from "./pages/ReviewsPage";
 import CreateReviewsPage from "./pages/CreateReviewsPage";
 import ReviewDetalisPage from "./pages/ReviewDetalisPage";
 import EditReviewPage from "./pages/EditReviewPage";
+import AdminRoute from "./components/AdminRoute";
+import DeleteReviewsPage from "./pages/DeleteReviewsPage";
 function App() {
   return (
     <>
@@ -22,12 +24,30 @@ function App() {
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        <Route path="/create-product" element={<ProtectedRoute><CreateProductPage /></ProtectedRoute>} />
-        <Route path="/products/:id/edit" element={<ProtectedRoute><EditProductPage /></ProtectedRoute>} />
+        <Route
+  path="/create-product"
+  element={
+    <AdminRoute>
+      <CreateProductPage />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/products/:id/edit"
+  element={
+    <AdminRoute>
+      <EditProductPage />
+    </AdminRoute>
+  }
+/>
+        
+        
         <Route path="/reviews" element={<ReviewsPage />} />
-        <Route path="/create-review" element={<ProtectedRoute><CreateReviewsPage /></ProtectedRoute>} />
+        <Route path="/create-review" element={<AdminRoute><CreateReviewsPage /></AdminRoute>} />
         <Route path="/reviews/:id" element={<ReviewDetalisPage />} />
-        <Route path="/reviews/:id/edit" element={<ProtectedRoute><EditReviewPage /></ProtectedRoute>} />
+        <Route path="/reviews/:id/edit" element={<AdminRoute><EditReviewPage /></AdminRoute>} />
+        <Route path="/reviews/:id/delete" element={<AdminRoute><DeleteReviewsPage /></AdminRoute>} />
       </Routes>
 
       <div className="ticks"></div>

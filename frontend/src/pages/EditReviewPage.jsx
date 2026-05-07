@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getPost, updatePost } from "../api/postsApi";
-import { isAdmin, isAuthenticated } from "../api/authStorage";
 import StatusMessage from "../components/StatusMessage.jsx";
 
 function EditReviewPage() {
@@ -17,16 +16,7 @@ function EditReviewPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
-  if (!isAuthenticated()) {
-    navigate("/login");
-    return null;
-  }
-
-  if (!isAdmin()) {
-    navigate("/reviews");
-    return null;
-  }
-
+ 
   function handleChange(event) {
     const { name, value } = event.target;
 

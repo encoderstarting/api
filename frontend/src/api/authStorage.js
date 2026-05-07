@@ -1,6 +1,6 @@
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
-
+const USER_KEY = "user";
 export function getAccessToken() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
@@ -17,12 +17,12 @@ export function saveTokens(token) {
 export function clearTokens() {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
 }
 
 export function isAuthenticated() {
   return Boolean(getAccessToken());
 }
-const USER_KEY = "user";
 export function saveUser(user) {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
 }

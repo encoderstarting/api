@@ -2,16 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../api/productsApi";
 import StatusMessage from "../components/StatusMessage.jsx";
-import { isAuthenticated, isAdmin } from "../api/authStorage";
 
 function CreateProductPage() {
   const navigate = useNavigate();
-  const authenticated = isAuthenticated();
-  const admin = isAdmin();
-  if(!authenticated || !admin) {
-    navigate("/login");
-    return null;
-  }
+  
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -35,10 +29,6 @@ function CreateProductPage() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!isAuthenticated()) {
-      navigate("/login");
-      return;
-    }
     setIsLoading(true);
     setError("");
 
