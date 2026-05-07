@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMe } from "../api/authApi";
 import StatusMessage from "../components/StatusMessage.jsx";
 import { logout } from "../api/authApi";
+import { clearTokens } from "../api/authStorage";
 import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
@@ -12,8 +13,7 @@ function ProfilePage() {
   function handleLogout() {
     logout()
     .finally(() => {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
+      clearTokens();
 
 
       navigate("/login");

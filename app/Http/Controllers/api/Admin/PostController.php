@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
-use App\Service\PostService;
+use App\Services\PostService;
 class PostController extends Controller
 {
     public function __construct(private PostService $postService){

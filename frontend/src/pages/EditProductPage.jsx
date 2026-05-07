@@ -1,0 +1,160 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getProduct, updateProduct } from "../api/productsApi";
+import { isAdmin, isAuthenticated } from "../api/authStorage";
+import StatusMessage from "../components/StatusMessage.jsx";
+
+function EditProductPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    brand: "",
+    is_active: true,
+  });
+
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  if (!isAuthenticated()) {
+    navigate("/login");
+    return null;
+  }
+
+  if (!isAdmin()) {
+    navigate("/products");
+    return null;
+  }
+
+  function handleChange(event) {
+    const { name, value, type, checked } = event.target;
+
+    setForm({
+      ...form,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    setIsSaving(true);
+    setError("");
+
+    updateProduct(id, {
+      ...form,
+      price: Number(form.price),
+      quantity: Number(form.quantity),
+    })
+      .then(() => {
+        navigate(`/products/${id}`);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    setError("");
+
+    getProduct(id)
+      .then((product) => {
+        setForm({
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          quantity: product.quantity,
+          brand: product.brand,
+          is_active: product.is_active,
+        });
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [id]);
+
+  return (
+    <section id="center">
+      <div className="hero">
+        <Link to={`/products/${id}`}>Назад к товару</Link>
+
+        <h1>Редактировать товар</h1>
+
+        {isLoading && <StatusMessage>Загрузка...</StatusMessage>}
+
+        {error && <StatusMessage>Ошибка: {error}</StatusMessage>}
+
+        {!isLoading && (
+          <form onSubmit={handleSubmit}>
+            <input
+              name="name"
+              placeholder="Название"
+              value={form.name}
+              onChange={handleChange}
+            />
+
+            <input
+              name="description"
+              placeholder="Описание"
+              value={form.description}
+              onChange={handleChange}
+            />
+
+            <input
+              name="price"
+              type="number"
+              placeholder="Цена"
+              value={form.price}
+              onChange={handleChange}
+            />
+
+            <input
+              name="quantity"
+              type="number"
+              placeholder="Количество"
+              value={form.quantity}
+              onChange={handleChange}
+            />
+
+            <input
+              name="brand"
+              placeholder="Бренд"
+              value={form.brand}
+              onChange={handleChange}
+            />
+
+            <label>
+              <input
+                name="is_active"
+                type="checkbox"
+                checked={form.is_active}
+                onChange={handleChange}
+              />
+              Активен
+            </label>
+
+            <button type="submit" disabled={isSaving}>
+              Сохранить
+            </button>
+          </form>
+        )}
+
+        {isSaving && <StatusMessage>Сохранение...</StatusMessage>}
+      </div>
+    </section>
+  );
+}
+
+export default EditProductPage;

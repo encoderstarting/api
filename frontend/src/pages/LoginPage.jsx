@@ -2,6 +2,7 @@ import { useState } from "react";
 import { login } from "../api/authApi";
 import StatusMessage from "../components/StatusMessage.jsx";
 import { useNavigate } from "react-router-dom";
+import { saveTokens, saveUser } from "../api/authStorage";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,8 +19,8 @@ function LoginPage() {
 
     login(email, password)
       .then((data) => {
-        localStorage.setItem("access_token", data.token.access_token);
-        localStorage.setItem("refresh_token", data.token.refresh_token);
+        saveTokens(data.token);
+        saveUser(data.user);
         navigate("/products");
       })
       .catch((error) => {

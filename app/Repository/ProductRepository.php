@@ -8,7 +8,7 @@ class ProductRepository
 {
     public function paginate(): LengthAwarePaginator
     {
-        return Product::paginate(10);
+        return Product::where('is_active', true)->paginate(10);
     }
     public function create(array $data): Product
     {
