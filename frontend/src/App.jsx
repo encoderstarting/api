@@ -14,6 +14,7 @@ import ReviewDetalisPage from "./pages/ReviewDetalisPage";
 import EditReviewPage from "./pages/EditReviewPage";
 import AdminRoute from "./components/AdminRoute";
 import DeleteReviewsPage from "./pages/DeleteReviewsPage";
+import UpdateRolePage from "./pages/UpdateRolePage.jsx";
 function App() {
   return (
     <>
@@ -42,7 +43,14 @@ function App() {
   }
 />
         
-        
+<Route
+  path="/update-role"
+  element={
+    <AdminRoute>
+      <UpdateRolePage />
+    </AdminRoute>
+  }
+/>
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/create-review" element={<AdminRoute><CreateReviewsPage /></AdminRoute>} />
         <Route path="/reviews/:id" element={<ReviewDetalisPage />} />

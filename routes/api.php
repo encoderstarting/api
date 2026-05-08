@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 
 
 
@@ -26,6 +27,7 @@ Route::middleware(['auth:api','role:admin'])->group(function () {
     Route::post('/products', [AdminProductController::class, 'store']);
     Route::put('/products/{product}', [AdminProductController::class, 'update']);
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy']);
+    Route::put('/users/{user}/role', [AdminUserController::class, 'updateRole']);
 });
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/me', [AuthController::class, 'me']);

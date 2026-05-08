@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UpdateUserRequest;
-use App\Service\UserService;
+use App\Services\UserService;
 use App\Http\Resources\UserResource;
 use App\Enums\Role;
 

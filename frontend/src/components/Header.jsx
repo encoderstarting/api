@@ -21,6 +21,7 @@ function Header() {
             <Link to="/profile">Профиль</Link>
             {admin && <Link to="/create-product">Добавить товар</Link>}
             {admin && <Link to="/create-review">Добавить отзыв</Link>}
+            {admin && <Link to="/update-role">Назначить роль</Link>}
             <button type="button" onClick={handleLogout}>
               Выйти
             </button>
