@@ -7,6 +7,7 @@ import {
 } from "./authStorage";
 
 function buildHeaders(options = {}) {
+
   const token = getAccessToken();
 
   const headers = {
@@ -105,6 +106,8 @@ export async function apiRequest(path, options = {}) {
     const errorData = await parseResponse(response);
     throw new Error(getErrorMessage(errorData));
   }
+
+
 
   return parseResponse(response);
 }

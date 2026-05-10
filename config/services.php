@@ -34,5 +34,14 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'open_meteo' => [
+        'geocoding_url' => env('OPEN_METEO_GEOCODING_URL','https://geocoding-api.open-meteo.com/v1'),
+        'forecast_url' => env('OPEN_METEO_FORECAST_URL', 'https://api.open-meteo.com/v1'),
+        
+    ],  
+    'currency' => [
+    'url' => env('CURRENCY_API_URL', 'https://open.er-api.com/v6/latest'),
+],
+    
 
 ];

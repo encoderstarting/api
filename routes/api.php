@@ -11,8 +11,9 @@ use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
-
-
+use App\Http\Controllers\Api\WeatherController;
+use App\Http\Controllers\Api\ProductQrCodeController;
+use App\Http\Controllers\Api\CurrencyController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -38,3 +39,6 @@ Route::middleware(['auth:api'])->group(function () {
 Route::post('/refresh', [AuthController::class, 'refresh']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/weather', [WeatherController::class, 'show']);
+Route::get('/products/{product}/qr-code', [ProductQrCodeController::class, 'show']);
+Route::get('/currency/convert', [CurrencyController::class, 'convert']);

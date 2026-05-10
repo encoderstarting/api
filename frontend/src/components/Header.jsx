@@ -14,7 +14,7 @@ function Header() {
     <header className="header">
       <Link to="/products">Товары</Link>
       <Link to="/reviews">Отзывы</Link>
-
+      <Link to="/weather">Погода</Link>
       <nav>
         {authenticated ? (
           <>
