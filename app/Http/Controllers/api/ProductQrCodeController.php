@@ -14,7 +14,7 @@ class ProductQrCodeController extends Controller
 
     public function show(Product $product)
     {
-        $productUrl = 'http://localhost:5173/products/' . $product->id;
+        $productUrl = config('app.frontend_url') . '/products/' . $product->id;
 
         return response()->json([
             'product_id' => $product->id,
