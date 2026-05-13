@@ -16,6 +16,7 @@ import AdminRoute from "./components/AdminRoute";
 import DeleteReviewsPage from "./pages/DeleteReviewsPage";
 import UpdateRolePage from "./pages/UpdateRolePage.jsx";
 import WeatherPage from "./pages/WeatherPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 function App() {
   return (
     <>
@@ -58,6 +59,15 @@ function App() {
         <Route path="/reviews/:id/edit" element={<AdminRoute><EditReviewPage /></AdminRoute>} />
         <Route path="/reviews/:id/delete" element={<AdminRoute><DeleteReviewsPage /></AdminRoute>} />
         <Route path="/weather" element={<WeatherPage />} />
+        <Route
+  path="/analytics"
+  element={
+    <AdminRoute>
+      <AnalyticsPage />
+    </AdminRoute>
+  }
+/>
+        
       </Routes>
 
       <div className="ticks"></div>

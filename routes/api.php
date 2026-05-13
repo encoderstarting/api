@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\WeatherController;
 use App\Http\Controllers\Api\ProductQrCodeController;
 use App\Http\Controllers\Api\CurrencyController;
+use App\Http\Controllers\Api\Admin\AnalyticsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -29,6 +30,7 @@ Route::middleware(['auth:api','role:admin'])->group(function () {
     Route::put('/products/{product}', [AdminProductController::class, 'update']);
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy']);
     Route::put('/users/{user}/role', [AdminUserController::class, 'updateRole']);
+    Route::get('/analytics', [AnalyticsController::class, 'index']);
 });
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
