@@ -8,9 +8,11 @@ import { isAdmin } from "../api/authStorage";
 import { getProductQrCode } from "../api/qrCodeApi";
 import { convertCurrency } from "../api/currencyApi";
 import { apiRequest } from "../api/apiClient";
+import OrderNotification from "../components/OrderNotification";
 function ProductDetailsPage() {
   const { id } = useParams();
   const[message, setMessage] = useState("");
+  const[createdOrderId, setCreatedOrderId] = useState(null);
   const navigate = useNavigate();
   const admin = isAdmin();
   function handleDeleteProduct() {
@@ -42,7 +44,8 @@ function ProductDetailsPage() {
       .then((order) => {
         setProduct({...product, quantity: product.quantity - quantity});
         setQuantity(1);
-        setMessage(`Заказ #${order.data.id} создан.Оповестили администратора`);
+        setCreatedOrderId(order.data.id);
+      
       })
       .catch((error) => {
         setError(error.message);
@@ -131,7 +134,12 @@ function ProductDetailsPage() {
 )}
             
             {product.quantity <= 0 && <StatusMessage>Товара нет в наличии</StatusMessage>} {quantity <= 0 && <StatusMessage>Количество не может быть меньше 1</StatusMessage>} {quantity > product.quantity && <StatusMessage>Количество не может быть больше {product.quantity}</StatusMessage>}
-            {message && <StatusMessage>{message}</StatusMessage>}
+            {createdOrderId && (
+  <OrderNotification
+    orderId={createdOrderId}
+    onClose={() => setCreatedOrderId(null)}
+  />
+)}
             {isQrCodeVisible && qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" />}
           </div>
         )}
