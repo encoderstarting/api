@@ -39,10 +39,10 @@ function ProductDetailsPage() {
     }
   
     createOrder(product.id, quantity)
-      .then(() => {
+      .then((order) => {
         setProduct({...product, quantity: product.quantity - quantity});
         setQuantity(1);
-        setMessage("Заказ создан");
+        setMessage(`Заказ #${order.data.id} создан.Оповестили администратора`);
       })
       .catch((error) => {
         setError(error.message);

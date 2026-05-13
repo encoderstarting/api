@@ -7,16 +7,18 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Models\Product;
+use App\Services\TelegramService;
 
 
 class OrderService
 {
-    public function __construct(private OrderRepository $orderRepository){
+    public function __construct(private OrderRepository $orderRepository, private TelegramService $telegramService){
         $this->orderRepository = $orderRepository;
+        $this->telegramService = $telegramService;
     }
     public function createOrder(User $user,array $data): Order
     {
-        return DB::transaction(function () use ($user, $data) {
+        $order = DB::transaction(function () use ($user, $data) {
             $product = Product::findOrFail($data['product_id']);
             if(!$product->is_active){
                 throw ValidationException::withMessages([
@@ -43,8 +45,13 @@ class OrderService
             ]);
             $product->quantity -= $data['quantity'];
             $product->save();
-            return $order->load('items.product');
+
+            return $order->load('items.product','user');
+            
         });
+        $this->telegramService->sendOrderCreated($order);
+        return $order;
+        
     }
     
 }
