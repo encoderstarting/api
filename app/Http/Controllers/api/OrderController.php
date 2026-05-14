@@ -5,6 +5,7 @@ use App\Services\OrderService;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -14,6 +15,10 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request){
         $order = $this->orderService->createOrder($request->user(), $request->validated());
         return new OrderResource($order);
+    }
+    public function index(Request $request){
+        $orders = $this->orderService->getUserOrders($request->user());
+        return OrderResource::collection($orders);
     }
     
    

@@ -17,6 +17,8 @@ import DeleteReviewsPage from "./pages/DeleteReviewsPage";
 import UpdateRolePage from "./pages/UpdateRolePage.jsx";
 import WeatherPage from "./pages/WeatherPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import CartPage from "./pages/CartPage";
+import OrdersHistoryPage from "./pages/OrdersHistoryPage";
 function App() {
   return (
     <>
@@ -65,6 +67,24 @@ function App() {
     <AdminRoute>
       <AnalyticsPage />
     </AdminRoute>
+  }
+  
+/>
+<Route
+  path="/cart"
+  element={
+    <ProtectedRoute>
+      <CartPage />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/orders"
+  element={
+    <ProtectedRoute>
+      <OrdersHistoryPage />
+    </ProtectedRoute>
   }
 />
         

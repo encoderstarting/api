@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams,Link } from "react-router-dom";
 import { getProduct, deleteProduct } from "../api/productsApi";
 import StatusMessage from "../components/StatusMessage.jsx";
-import { createOrder } from "../api/ordersApi";
+import { addToCart } from "../api/cartStorage";
 import { isAuthenticated } from "../api/authStorage";
 import { isAdmin } from "../api/authStorage";
 import { getProductQrCode } from "../api/qrCodeApi";
@@ -40,16 +40,9 @@ function ProductDetailsPage() {
       return;
     }
   
-    createOrder(product.id, quantity)
-      .then((order) => {
-        setProduct({...product, quantity: product.quantity - quantity});
-        setQuantity(1);
-        setCreatedOrderId(order.data.id);
-      
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
+    addToCart(product, quantity)
+    setMessage("Товар добавлен в корзину");
+    navigate("/cart");
   }
   const [product, setProduct] = useState(null);
   const [error, setError] = useState("");
@@ -124,7 +117,7 @@ function ProductDetailsPage() {
             <p>Бренд: {product.brand}</p>
             <p>Количество на складе: {product.quantity}</p>
             <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min={1} max={product.quantity} />
-            <button onClick={handleCreateOrder} disabled={product.quantity <= 0 || !isAuthenticated() || quantity <= 0 || quantity > product.quantity}>{isAuthenticated() ? "Купить" : "Войдите для покупки"}</button>
+            <button onClick={handleCreateOrder} disabled={product.quantity <= 0 || !isAuthenticated() || quantity <= 0 || quantity > product.quantity}>{isAuthenticated() ? "Добавить в корзину" : "Войдите для покупки"}</button>
             <button type="button" onClick={handleShowQrCode}>Показать QR-код</button>
             {isAdmin() && <Link to={`/products/${product.id}/edit`}>Редактировать</Link>}
             {isAdmin() && (
