@@ -9,12 +9,14 @@ import { getProductQrCode } from "../api/qrCodeApi";
 import { convertCurrency } from "../api/currencyApi";
 import { apiRequest } from "../api/apiClient";
 import OrderNotification from "../components/OrderNotification";
+import CartNotification from "../components/CartNotification";
 function ProductDetailsPage() {
   const { id } = useParams();
   const[message, setMessage] = useState("");
   const[createdOrderId, setCreatedOrderId] = useState(null);
   const navigate = useNavigate();
   const admin = isAdmin();
+  const [isCartNotificationVisible, setIsCartNotificationVisible] = useState(false);
   function handleDeleteProduct() {
     const confirmed = window.confirm("Вы уверены, что хотите удалить товар?");
     if (confirmed) {
@@ -41,8 +43,8 @@ function ProductDetailsPage() {
     }
   
     addToCart(product, quantity)
-    setMessage("Товар добавлен в корзину");
-    navigate("/cart");
+    setIsCartNotificationVisible(true);
+    
   }
   const [product, setProduct] = useState(null);
   const [error, setError] = useState("");
@@ -118,6 +120,7 @@ function ProductDetailsPage() {
             <p>Количество на складе: {product.quantity}</p>
             <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min={1} max={product.quantity} />
             <button onClick={handleCreateOrder} disabled={product.quantity <= 0 || !isAuthenticated() || quantity <= 0 || quantity > product.quantity}>{isAuthenticated() ? "Добавить в корзину" : "Войдите для покупки"}</button>
+
             <button type="button" onClick={handleShowQrCode}>Показать QR-код</button>
             {isAdmin() && <Link to={`/products/${product.id}/edit`}>Редактировать</Link>}
             {isAdmin() && (
@@ -134,6 +137,7 @@ function ProductDetailsPage() {
   />
 )}
             {isQrCodeVisible && qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" />}
+            {isCartNotificationVisible && <CartNotification productName={product.name} quantity={quantity} onGoToCart={() => navigate("/cart")} onClose={() => setIsCartNotificationVisible(false)} />}
           </div>
         )}
       </div>
