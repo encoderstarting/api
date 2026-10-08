@@ -34,7 +34,14 @@ function RegistrationPage() {
 
     try {
       const data = await register(email, password, gender);
-      console.log("Registration response", data);
+      console.log("Registration response", {
+        user: data.user,
+        token: {
+          access_token: "[скрыто]",
+          refresh_token: "[скрыто]",
+          expires_in: data.token.expires_in,
+        },
+      });
       saveTokens(data.token);
       saveUser(data.user);
       navigate("/profile");
