@@ -109,7 +109,7 @@
   "variable": [
     {
       "key": "api_url",
-      "value": "http://localhost:8000/api",
+      "value": "https://registration-api-kech.amvera.io/api",
       "type": "string"
     },
     {
