@@ -1,0 +1,10 @@
+.env
+.git
+.idea
+database/*.sqlite
+dist
+frontend/dist
+frontend/node_modules
+node_modules
+storage/logs/*.log
+vendor
