@@ -327,6 +327,127 @@ p {
   display: none;
 }
 
+.auth-page {
+  min-height: calc(100vh - 120px);
+  justify-content: center;
+}
+
+.auth-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+  gap: clamp(32px, 7vw, 92px);
+  align-items: center;
+  padding: clamp(30px, 6vw, 72px);
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(203, 213, 225, 0.86);
+  border-radius: 36px;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.13);
+  backdrop-filter: blur(22px);
+}
+
+.auth-intro h1 {
+  margin: 16px 0 20px;
+  color: #0f172a;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+}
+
+.auth-intro p {
+  max-width: 30rem;
+  color: #64748b;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.eyebrow {
+  display: inline-flex;
+  padding: 8px 12px;
+  color: #1d4ed8;
+  background: #dbeafe;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.registration-form {
+  width: 100%;
+  padding: 28px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 26px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.registration-form label {
+  margin-top: 4px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 112px;
+}
+
+.password-field .password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  padding: 8px 11px;
+  color: #1d4ed8;
+  background: #eff6ff;
+  box-shadow: none;
+  transform: translateY(-50%);
+}
+
+.password-field .password-toggle:hover {
+  box-shadow: none;
+  transform: translateY(-50%);
+}
+
+.registration-submit {
+  margin-top: 12px;
+  padding: 14px 18px;
+}
+
+.profile-data {
+  display: grid;
+  gap: 10px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+@media (max-width: 820px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-intro {
+    text-align: center;
+  }
+
+  .auth-intro p {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .header {
+    align-items: flex-start;
+  }
+
+  .auth-card,
+  .registration-form {
+    padding: 22px;
+    border-radius: 24px;
+  }
+}
+
 .order-notification {
   position: relative;
   isolation: isolate;

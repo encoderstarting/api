@@ -1,5 +1,20 @@
 import { apiRequest } from "./apiClient";
 
+export function register(email, password, gender) {
+  return apiRequest("/registration", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      gender,
+    }),
+  });
+}
+
 export function login(email, password) {
   return apiRequest("/login", {
     method: "POST",
@@ -24,5 +39,5 @@ export function logout() {
 }
 
 export function getMe() {
-  return apiRequest("/me");
+  return apiRequest("/profile");
 }

@@ -19,12 +19,14 @@ import WeatherPage from "./pages/WeatherPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import CartPage from "./pages/CartPage";
 import OrdersHistoryPage from "./pages/OrdersHistoryPage";
+import RegistrationPage from "./pages/RegistrationPage";
 function App() {
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Navigate to="/products" />} />
+        <Route path="/" element={<Navigate to="/registration" />} />
+        <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/login" element={<LoginPage />} />

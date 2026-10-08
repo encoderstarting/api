@@ -30,7 +30,10 @@ function Header() {
             </button>
           </>
         ) : (
-          <Link to="/login">Войти</Link>
+          <>
+            <Link to="/registration">Регистрация</Link>
+            <Link to="/login">Войти</Link>
+          </>
         )}
       </nav>
     </header>

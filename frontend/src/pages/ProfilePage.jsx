@@ -10,6 +10,11 @@ function ProfilePage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const genderLabels = {
+    male: "Мужской",
+    female: "Женский",
+    other: "Другой",
+  };
   function handleLogout() {
     logout()
     .finally(() => {
@@ -46,10 +51,11 @@ function ProfilePage() {
         {error && <StatusMessage>Ошибка: {error}</StatusMessage>}
 
         {!isLoading && !error && user && (
-          <div>
+          <div className="profile-data">
             <p>ID: {user.id}</p>
             <p>Email: {user.email}</p>
             <p>Имя: {user.name}</p>
+            <p>Пол: {genderLabels[user.gender] || user.gender}</p>
             <button onClick={handleLogout}>Выйти</button>
           </div>
         )}
